@@ -1,7 +1,6 @@
 import { gapi } from "gapi-script"
 
-export const sendScansToSheet = ( scannedData, setUserMessage,  sheetNumber) => {
-
+export const sendScansToSheet = (scannedData, setUserMessage, sheetNumber) => {
   if (!gapi.client) {
     setUserMessage("Google API not loaded!")
     return

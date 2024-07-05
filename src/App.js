@@ -148,40 +148,36 @@ export const App = () => {
         userMessage={userMessage}
         setUserMessage={setUserMessage}
       />
-
-      <DisplayScans
-        scannedData={scannedData}
-        setEditIndex={setEditIndex}
-        toggleEditModal={toggleEditModal}
-        handleRemove={handleRemove}
-        setCurrentScan={setCurrentScan}
-      />
-
-      {/* send verified data to sheet */}
-      <div className="send-to-sheet center">
-        {scannedData.length > 0 ? (
-          <button
-            className="button positive"
-            type="button"
-            onClick={(e) => submitScans(e)}
-          >
-            Submit Scans
-          </button>
-        ) : null}
-      </div>
-      {/* <SendToSheet
-        scannedData={scannedData}
-        setUserMessage={setUserMessage}
-        clearScannedData={clearScannedData}
-        sheetNumber={1}
-      /> */}
-      <SentScansList sentScans={sentScans} />
       {user ? (
-        <div className="log-out-button center">
-          <button className="negative" onClick={handleSignOutClick}>
-            LOG OUT
-          </button>
-        </div>
+        <>
+          <DisplayScans
+            scannedData={scannedData}
+            setEditIndex={setEditIndex}
+            toggleEditModal={toggleEditModal}
+            handleRemove={handleRemove}
+            setCurrentScan={setCurrentScan}
+          />
+
+          {/* send verified data to sheet */}
+          <div className="send-to-sheet center">
+            {scannedData.length > 0 ? (
+              <button
+                className="button positive"
+                type="button"
+                onClick={(e) => submitScans(e)}
+              >
+                Submit Scans
+              </button>
+            ) : null}
+          </div>
+          <SentScansList sentScans={sentScans} />
+
+          <div className="log-out-button center">
+            <button className="negative" onClick={handleSignOutClick}>
+              LOG OUT
+            </button>
+          </div>
+        </>
       ) : null}
     </main>
   )
