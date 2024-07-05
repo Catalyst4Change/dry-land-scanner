@@ -28,7 +28,7 @@ img {
 
 button {
   font-size: large;
-  width: 100%;
+  width: 150px;
   color: white;
   border: none;
   border-radius: 5px;
@@ -65,6 +65,7 @@ button {
 .option-buttons {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   width: 100%;
 }
 

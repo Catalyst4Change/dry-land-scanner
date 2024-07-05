@@ -51,7 +51,7 @@ export const App = () => {
 
   const submitScans = (event) => {
     event.preventDefault()
-    sendScansToSheet(scannedData, setUserMessage,  1)
+    sendScansToSheet(scannedData, setUserMessage, 1)
     closeModals()
     clearScannedData()
   }
@@ -81,6 +81,7 @@ export const App = () => {
   const clearCurrentData = () => {
     setCurrentScan([])
     setEditIndex(null)
+    setScanning(false)
   }
 
   const clearLocalStorageIfExpired = () => {
@@ -96,6 +97,12 @@ export const App = () => {
       })
       setSentScans(updatedScans)
     }
+  }
+
+  const handleSignOutClick = () => {
+    gapi.auth2.getAuthInstance().signOut()
+    setUserName(null)
+    setScanning(false)
   }
 
   return (
@@ -151,7 +158,7 @@ export const App = () => {
       />
 
       {/* send verified data to sheet */}
-      <div className="send-to-sheet">
+      <div className="send-to-sheet center">
         {scannedData.length > 0 ? (
           <button
             className="button positive"
@@ -169,6 +176,13 @@ export const App = () => {
         sheetNumber={1}
       /> */}
       <SentScansList sentScans={sentScans} />
+      {user ? (
+        <div className="log-out-button center">
+          <button className="negative" onClick={handleSignOutClick}>
+            LOG OUT
+          </button>
+        </div>
+      ) : null}
     </main>
   )
 }

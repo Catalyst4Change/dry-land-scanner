@@ -1,4 +1,4 @@
-import React, { useEffect, useState, startTransition } from "react"
+import React, { useEffect, useState, startTransition, Suspense } from "react"
 import { convertTimeStamp } from "./timestampConverter"
 import "./App.scss"
 
@@ -90,15 +90,17 @@ export const QRScanner = ({
     <main className="center">
       <div className={"scanner-window"}>
         <div className="qr-scanner-container">
-          {scanPressed ? (
-            <QrReader
-              key={qrReaderKey}
-              delay={1000}
-              constraints={{ video: { facingMode: "environment" } }}
-              onError={handleScanError}
-              onScan={handleScan}
-            />
-          ) : null}
+          <Suspense fallback={<div>Loading...</div>}>
+            {scanPressed ? (
+              <QrReader
+                key={qrReaderKey}
+                delay={1000}
+                constraints={{ video: { facingMode: "environment" } }}
+                onError={handleScanError}
+                onScan={handleScan}
+              />
+            ) : null}
+          </Suspense>
         </div>
       </div>
       <button

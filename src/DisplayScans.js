@@ -1,4 +1,5 @@
 import React from "react"
+import "./App.scss"
 
 export const DisplayScans = ({
   scannedData,
@@ -16,11 +17,11 @@ export const DisplayScans = ({
   return (
     <div className="scan-display center">
       {scannedData.map((scan, index) => {
-        const readableString = scan.join(" - ") // Create a readable string for the inner array
+        const readableString = scan.join(" - ") 
         return (
-          <div className="display-scan-option" key={index}>
+          <div className="display-scan-option center" key={index}>
             <span>{readableString}</span>
-            <div className="option-buttons">
+            <div className="option-buttons ">
               <button
                 className="button neutral"
                 type="button"

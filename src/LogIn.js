@@ -57,10 +57,6 @@ export const LogIn = ({ user, setUserName, setUserMessage }) => {
       })
   }
 
-  const handleSignOutClick = () => {
-    gapi.auth2.getAuthInstance().signOut()
-    setUserName(null)
-  }
 
   // Avoids reload errors by ensuring user stays logged in
   useEffect(() => {
