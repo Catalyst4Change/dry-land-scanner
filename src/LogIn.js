@@ -12,6 +12,8 @@ export const LogIn = ({ user, setUserName, setUserMessage }) => {
   ]
   const SCOPES = "https://www.googleapis.com/auth/spreadsheets"
 
+  console.log(".env", import.meta.env);
+
   // Connect to google API
   const initClient = () => {
     return gapi.client
