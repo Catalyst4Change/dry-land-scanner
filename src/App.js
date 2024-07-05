@@ -49,11 +49,13 @@ export const App = () => {
     setScanning(false)
   }
 
-  const submitScans = (event) => {
+  const submitScans = async (event) => {
     event.preventDefault()
-    sendScansToSheet(scannedData, setUserMessage, 1)
-    closeModals()
+    const submissionResult = await sendScansToSheet(scannedData, setUserMessage, 1)
+    if (submissionResult) {
+          closeModals()
     clearScannedData()
+    }
   }
 
   const closeModals = () => {
