@@ -145,7 +145,7 @@ button {
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin: 10%;
+  margin: 2% 10%;
 }
 
 .green {
@@ -155,9 +155,19 @@ button {
 
 .modal-options {
   display: flex;
+  width: 50%;
   flex-direction: row;
   justify-content: space-around;
   button {
     width: 100px;
   }
+}
+
+.user-message {
+  position: fixed;
+  top: -20px;
+  left: 0px;
+  height: auto;
+  width: 100%;
+  border-bottom: 1px black solid;
 }

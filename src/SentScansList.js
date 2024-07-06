@@ -1,6 +1,7 @@
 import React from "react"
 
 export const SentScansList = ({ sentScans }) => {
+  console.log("sentScans:", sentScans);
   return (
     <div className="scan-display center">
       {sentScans.length > 0 ? (

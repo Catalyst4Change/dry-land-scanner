@@ -6,7 +6,6 @@ export const sendScansToSheet = async (scannedData, setUserMessage, sheetNumber)
     return false;
   }
 
-
   const params = {
     spreadsheetId: "1eOjJmq4Ex8TuBQdFbmeUBcaPWRrKqxXgoNax8GnEspA",
     range: `Sheet${sheetNumber}`,
@@ -15,7 +14,7 @@ export const sendScansToSheet = async (scannedData, setUserMessage, sheetNumber)
   };
 
   const valueRangeBody = {
-    values: scannedData,
+    values: [scannedData],
   };
 
   try {

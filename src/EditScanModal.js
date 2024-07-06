@@ -9,7 +9,10 @@ export const EditScanModal = ({
   scanItem,
   setScannedData,
   editIndex,
+  submitScan
 }) => {
+  const [timestamp, product, batch, size] = scanItem
+
   const [quantity, setQuantity] = useState(null)
 
   useEffect(() => {
@@ -42,21 +45,23 @@ export const EditScanModal = ({
     const updatedItem = [...scanItem]
     updatedItem[4] = quantity // Update the quantity in the item
 
-    if (editIndex !== null && editIndex >= 0) {
-      // Update an existing item
-      setScannedData((currentScannedData) =>
-        currentScannedData.map((item, index) =>
-          index === editIndex ? updatedItem : item
-        )
-      )
-    } else {
+    // if (editIndex !== null && editIndex >= 0) {
+    //   // Update an existing item
+    //   setScannedData((currentScannedData) =>
+    //     currentScannedData.map((item, index) =>
+    //       index === editIndex ? updatedItem : item
+    //     )
+    //   )
+    // } else {
       // Add a new item
-      setScannedData((currentScannedData) => [
-        ...currentScannedData,
-        updatedItem,
-      ])
-    }
-    closeModals() // Close the modal after submission
+      // setScannedData((currentScannedData) => [
+      //   ...currentScannedData,
+      //   updatedItem,
+      // ])
+    // }
+
+    submitScan(updatedItem)
+
     setQuantity(0)
   }
 
@@ -71,17 +76,10 @@ export const EditScanModal = ({
       contentLabel="Edit Scan"
     >
       <form className="modal-form center" onSubmit={(e) => handleSubmit(e)}>
-        {/* 
-        create vehicle designator field (t/f) in QR ["Vehicle: Truck"]
-        strip out vehicle type on scan
-        
-        create new locally-stored state: vehicle status
-         if vehicle scanned, store check-in info inc. milage
-         when vehicle scanned again, calculate use-time (from timestamps), milage
-         submit: date - vehicle - plate - use-time - total-milage
-        */}
-
-        <h2>Edit Quantity:</h2>
+        <h2>
+          {product} - {batch} - {size}
+        </h2>
+        <h3>Edit Quantity:</h3>
         <div className="quantity-adjust">
           <button
             type="button"
@@ -111,7 +109,7 @@ export const EditScanModal = ({
             Cancel
           </button>
           <button className="submit-quantity button positive" type="submit">
-            Save
+            Submit
           </button>
         </div>
       </form>

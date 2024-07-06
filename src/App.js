@@ -9,10 +9,10 @@ import { SentScansList } from "./SentScansList"
 import "./App.scss"
 import { VehicleModal } from "./VehicleModal"
 
-// if local storage throws exception, 
+// if local storage throws exception,
 //    delete oldest prev.scan
 //    store most recent scan
-// if no prev. scans to delete, 
+// if no prev. scans to delete,
 //    func to know if recent new scan overwrote last old scan:
 //    overwrite occurs && storedSentScans.length === 0
 //    alert user
@@ -62,10 +62,14 @@ export const App = () => {
 
   const submitScans = async (event) => {
     event.preventDefault()
-    const submissionResult = await sendScansToSheet(scannedData, setUserMessage, 1)
+    const submissionResult = await sendScansToSheet(
+      scannedData,
+      setUserMessage,
+      1
+    )
     if (submissionResult) {
-          closeModals()
-    clearScannedData()
+      closeModals()
+      clearScannedData()
     }
   }
 
@@ -112,6 +116,22 @@ export const App = () => {
     }
   }
 
+  const submitScan = async (newScan) => {
+    console.log("submitted", newScan);
+    
+    const submissionResult = await sendScansToSheet(
+      newScan,
+      setUserMessage,
+      1
+    )
+    if (submissionResult) {
+      console.log("submission success");
+      setSentScans([...sentScans, ...newScan])
+      closeModals()
+      setCurrentScan([])
+    }
+  }
+
   const handleSignOutClick = () => {
     gapi.auth2.getAuthInstance().signOut()
     setUserName(null)
@@ -147,6 +167,7 @@ export const App = () => {
         setScannedData={setScannedData}
         scanItem={currentScan}
         editIndex={editIndex}
+        submitScan={submitScan}
       />
 
       <VehicleModal
