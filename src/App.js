@@ -31,19 +31,8 @@ export const App = () => {
   const [vehicleModalOpen, setVehicleModalOpen] = useState(false)
 
   // initialize local storage
-  const [scannedData, setScannedData] = useState(() => {
-    const storedScannedData = localStorage.getItem("scannedData")
-    return storedScannedData !== null ? JSON.parse(storedScannedData) : []
-  })
-  const [sentScans, setSentScans] = useState(() => {
-    const storedSentScans = localStorage.getItem("sentScans")
-    return storedSentScans !== null ? JSON.parse(storedSentScans) : []
-  })
-
-  useEffect(() => {
-    localStorage.setItem("scannedData", JSON.stringify(scannedData))
-    localStorage.setItem("sentScans", JSON.stringify(sentScans))
-  }, [scannedData, sentScans])
+  const [scannedData, setScannedData] = useState([])
+  const [sentScans, setSentScans] = useState([])
 
   useEffect(() => {
     clearLocalStorageIfExpired()
@@ -126,7 +115,7 @@ export const App = () => {
     )
     if (submissionResult) {
       console.log("submission success");
-      setSentScans([...sentScans, ...newScan])
+      setSentScans([...sentScans, [...newScan]])
       closeModals()
       setCurrentScan([])
     }
