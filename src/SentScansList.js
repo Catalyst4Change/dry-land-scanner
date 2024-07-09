@@ -2,11 +2,11 @@ import React from "react"
 
 export const SentScansList = ({ sentScans }) => {
   return (
-    <div className="scan-display center">
+    <div className="sent-scans-display center">
       {sentScans.length > 0 ? (
-        <span>
-          <b>Previously sent scans will be stored on your device for 24 hours:</b>
-        </span>
+        <>
+          <h3>Scans submitted in the last 24 hours:</h3>
+        </>
       ) : null}
       {sentScans.map((scan, index) => {
         const readableString = scan.join(" - ") // Create a readable string for the inner array

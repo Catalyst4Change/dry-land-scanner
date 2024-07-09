@@ -5,7 +5,7 @@ export const DisplayScans = ({
   scannedData,
   setEditIndex,
   toggleEditModal,
-  handleRemove,
+  handleDelete,
   setCurrentScan,
 }) => {
   const handleEdit = (index) => {
@@ -32,7 +32,7 @@ export const DisplayScans = ({
               <button
                 className="button negative"
                 type="button"
-                onClick={() => handleRemove(index)}
+                onClick={() => handleDelete(index)}
               >
                 Delete
               </button>

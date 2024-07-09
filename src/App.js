@@ -8,6 +8,7 @@ import { sendScansToSheet } from "./SendToSheet"
 import { SentScansList } from "./SentScansList"
 import { VehicleModal } from "./VehicleModal"
 import "./App.scss"
+import { DeleteItemModal } from "./DeleteItemModal"
 
 export const App = () => {
   // state
@@ -15,6 +16,7 @@ export const App = () => {
   const [userMessage, setUserMessage] = useState("")
   const [editIndex, setEditIndex] = useState(null)
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [scanning, setScanning] = useState(false)
   const [currentScan, setCurrentScan] = useState([])
   const [vehicleModalOpen, setVehicleModalOpen] = useState(false)
@@ -66,9 +68,10 @@ export const App = () => {
   const closeModals = () => {
     setVehicleModalOpen(false)
     setEditModalOpen(false)
-    setScanning(true)
+    setDeleteModalOpen(false)
     setCurrentScan([])
     setEditIndex(null)
+    setScanning(true)
   }
 
   const setUserName = (userName) => {
@@ -76,7 +79,13 @@ export const App = () => {
     setScanning(true)
   }
 
-  const handleRemove = (index) => {
+  const handleDelete = (index) => {
+    setEditIndex(index)
+    setCurrentScan(scannedData[index])
+    setDeleteModalOpen(true)
+  }
+
+  const deleteItem = (index) => {
     const updatedScans = [...scannedData]
     updatedScans.splice(index, 1)
     setScannedData(updatedScans)
@@ -141,6 +150,14 @@ export const App = () => {
         editIndex={editIndex}
       />
 
+      <DeleteItemModal
+        currentScan={currentScan}
+        deleteModalOpen={deleteModalOpen}
+        deleteItem={deleteItem}
+        editIndex={editIndex}
+        closeModals={closeModals}
+      />
+
       <VehicleModal
         vehicleModalOpen={vehicleModalOpen}
         handleCancel={toggleEditModal}
@@ -159,9 +176,10 @@ export const App = () => {
             scannedData={scannedData}
             setEditIndex={setEditIndex}
             toggleEditModal={toggleEditModal}
-            handleRemove={handleRemove}
+            handleDelete={handleDelete}
             setCurrentScan={setCurrentScan}
           />
+          <SentScansList sentScans={sentScans} />
 
           {/* send verified data to sheet */}
           <div className="send-to-sheet center">
@@ -175,7 +193,6 @@ export const App = () => {
               </button>
             ) : null}
           </div>
-          <SentScansList sentScans={sentScans} />
 
           <div className="log-out-button center">
             <button className="negative" onClick={handleSignOutClick}>
