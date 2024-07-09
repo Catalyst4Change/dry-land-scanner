@@ -43,13 +43,13 @@ export const DeleteItemModal = ({
         <h2>Are you sure you want to delete this scan?</h2>
         <div className="modal-options">
           <button
-            className="cancel-quantity button negative"
+            className="cancel-quantity button positive"
             type="button"
             onClick={handleCancel}
           >
             Cancel
           </button>
-          <button className="submit-quantity button positive" type="submit">
+          <button className="submit-quantity button negative" type="submit">
             Delete
           </button>
         </div>

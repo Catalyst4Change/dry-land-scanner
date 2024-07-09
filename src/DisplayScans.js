@@ -17,7 +17,7 @@ export const DisplayScans = ({
   return (
     <div className="scan-display center">
       {scannedData.map((scan, index) => {
-        const readableString = `${scan[1]} - batch ${scan[2]} - ${scan[3]}ml - ${scan[4]}ct`
+        const readableString = `${scan[1]} - #${scan[2]} - ${scan[3]}ml - ${scan[4]}ct`
         return (
           <div className="display-scan-option center" key={index}>
             <span>{readableString}</span>
