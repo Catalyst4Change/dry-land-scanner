@@ -9,16 +9,6 @@ import { SentScansList } from "./SentScansList"
 import "./App.scss"
 import { VehicleModal } from "./VehicleModal"
 
-// if local storage throws exception, 
-//    delete oldest prev.scan
-//    store most recent scan
-// if no prev. scans to delete, 
-//    func to know if recent new scan overwrote last old scan:
-//    overwrite occurs && storedSentScans.length === 0
-//    alert user
-//    halt scanning
-//    submit data (make sticky)
-//    store most recent scan (overwriting oldest prev. scan)
 
 export const App = () => {
   // state
@@ -50,6 +40,7 @@ export const App = () => {
   }, [])
 
   const toggleEditModal = (isVehicle) => {
+    console.log("toggleEditModal");
     if (isVehicle) {
       setVehicleModalOpen(true)
       setEditModalOpen(false)
@@ -73,6 +64,8 @@ export const App = () => {
     setVehicleModalOpen(false)
     setEditModalOpen(false)
     setScanning(true)
+    setCurrentScan([])
+    setEditIndex(null)
   }
 
   const setUserName = (userName) => {
