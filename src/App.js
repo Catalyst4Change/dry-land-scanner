@@ -92,7 +92,7 @@ export const App = () => {
   }
 
   const clearScannedData = () => {
-    setSentScans([...sentScans, ...scannedData])
+    setSentScans([...scannedData, ...sentScans])
     setScannedData([])
   }
 

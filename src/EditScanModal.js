@@ -52,8 +52,8 @@ export const EditScanModal = ({
     } else {
       // Add a new item
       setScannedData((currentScannedData) => [
-        ...currentScannedData,
         updatedItem,
+        ...currentScannedData
       ])
     }
     closeModals() // Close the modal after submission
@@ -71,9 +71,15 @@ export const EditScanModal = ({
       contentLabel="Edit Scan"
     >
       <form className="modal-form center" onSubmit={(e) => handleSubmit(e)}>
-        <span style={{fontWeight: 'bold', fontSize: '25px'}}>Product: {scanItem[1]}</span>
-        <span style={{fontWeight: 'bold', fontSize: '25px'}}>Batch: {scanItem[2]}</span>
-        <span style={{fontWeight: 'bold', fontSize: '25px'}}>Size: {scanItem[3]}ml</span>
+        <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+          Product: {scanItem[1]}
+        </span>
+        <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+          Batch: {scanItem[2]}
+        </span>
+        <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+          Size: {scanItem[3]}ml
+        </span>
 
         <h2>Edit Quantity:</h2>
         <div className="quantity-adjust">

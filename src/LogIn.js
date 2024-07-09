@@ -70,7 +70,7 @@ export const LogIn = ({ user, setUserName, setUserMessage }) => {
   }, [])
 
   return (
-    <div className="center">
+    <div className="splash-screen center">
       <div className="logo_container">
         <img src={logo} alt="Dry Land Distillery Logo" />
       </div>
