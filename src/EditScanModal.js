@@ -71,15 +71,9 @@ export const EditScanModal = ({
       contentLabel="Edit Scan"
     >
       <form className="modal-form center" onSubmit={(e) => handleSubmit(e)}>
-        {/* 
-        create vehicle designator field (t/f) in QR ["Vehicle: Truck"]
-        strip out vehicle type on scan
-        
-        create new locally-stored state: vehicle status
-         if vehicle scanned, store check-in info inc. milage
-         when vehicle scanned again, calculate use-time (from timestamps), milage
-         submit: date - vehicle - plate - use-time - total-milage
-        */}
+        <span style={{fontWeight: 'bold', fontSize: '25px'}}>Product: {scanItem[1]}</span>
+        <span style={{fontWeight: 'bold', fontSize: '25px'}}>Batch: {scanItem[2]}</span>
+        <span style={{fontWeight: 'bold', fontSize: '25px'}}>Size: {scanItem[3]}ml</span>
 
         <h2>Edit Quantity:</h2>
         <div className="quantity-adjust">
