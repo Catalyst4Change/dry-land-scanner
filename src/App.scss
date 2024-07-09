@@ -16,7 +16,6 @@ img {
 }
 
 .App {
-  padding-top: 5%;
   width: 100%;
   height: 100vh;
 }
@@ -78,17 +77,7 @@ button {
   height: 50%;
 }
 
-.qr-scanner-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  background-color: rgb(67, 67, 67);
-}
+
 
 .qr-scanner-container video {
   width: 100%;
@@ -100,6 +89,11 @@ button {
   width: 100%;
 }
 
+.scanner-section {
+  position: sticky;
+  top: 0px;
+  background-color: white;
+}
 .scanner-window {
   position: relative;
   box-sizing: content-box;
@@ -107,16 +101,33 @@ button {
   align-items: center;
   place-items: center;
   justify-content: center;
-
-  width: 90%;
-  max-width: 200px;
-  aspect-ratio: 1/1;
-  max-height: 300px;
   overflow: hidden;
+
+  width: 90vw;
+  max-width: 500px;
+  aspect-ratio: 16/9;
 
   border: 3px black solid;
   border-radius: 15px;
   margin: 10px auto;
+  .qr-scanner-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(67, 67, 67);
+  }
+}
+
+.scan-now-button {
+width: 90vw;
+height: 50px;
+max-width: 500px;
+
 }
 
 .send-to-sheet {

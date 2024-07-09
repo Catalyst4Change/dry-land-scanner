@@ -6,9 +6,8 @@ import { EditScanModal } from "./EditScanModal"
 import { DisplayScans } from "./DisplayScans"
 import { sendScansToSheet } from "./SendToSheet"
 import { SentScansList } from "./SentScansList"
-import "./App.scss"
 import { VehicleModal } from "./VehicleModal"
-
+import "./App.scss"
 
 export const App = () => {
   // state
@@ -40,7 +39,7 @@ export const App = () => {
   }, [])
 
   const toggleEditModal = (isVehicle) => {
-    console.log("toggleEditModal");
+    console.log("toggleEditModal")
     if (isVehicle) {
       setVehicleModalOpen(true)
       setEditModalOpen(false)
@@ -53,10 +52,14 @@ export const App = () => {
 
   const submitScans = async (event) => {
     event.preventDefault()
-    const submissionResult = await sendScansToSheet(scannedData, setUserMessage, 1)
+    const submissionResult = await sendScansToSheet(
+      scannedData,
+      setUserMessage,
+      1
+    )
     if (submissionResult) {
-          closeModals()
-    clearScannedData()
+      closeModals()
+      clearScannedData()
     }
   }
 
@@ -82,12 +85,6 @@ export const App = () => {
   const clearScannedData = () => {
     setSentScans([...sentScans, ...scannedData])
     setScannedData([])
-  }
-
-  const clearCurrentData = () => {
-    setCurrentScan([])
-    setEditIndex(null)
-    setScanning(false)
   }
 
   const clearLocalStorageIfExpired = () => {
@@ -122,14 +119,16 @@ export const App = () => {
       )}
 
       {scanning ? (
-        <QRScanner
-          user={user}
-          setCurrentScan={setCurrentScan}
-          userMessage={userMessage}
-          setUserMessage={setUserMessage}
-          scannedData={scannedData}
-          toggleEditModal={toggleEditModal}
-        />
+        <section className="scanner-section">
+          <QRScanner
+            user={user}
+            setCurrentScan={setCurrentScan}
+            userMessage={userMessage}
+            setUserMessage={setUserMessage}
+            scannedData={scannedData}
+            toggleEditModal={toggleEditModal}
+          />
+        </section>
       ) : null}
       {/* edit data and quantity (modal) */}
 

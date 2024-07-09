@@ -7,9 +7,7 @@ const QrReader = React.lazy(() => import("react-qr-scanner"))
 export const QRScanner = ({
   user,
   setCurrentScan,
-  userMessage,
   setUserMessage,
-  scannedData,
   toggleEditModal,
 }) => {
   const [qrReaderKey, setQrReaderKey] = useState(0)
@@ -108,10 +106,8 @@ export const QRScanner = ({
         onTouchEnd={handleTouchEnd} // Use touch events for mobile
         onMouseDown={handleTouchStart} // Optional: for desktop compatibility
         onMouseUp={handleTouchEnd} // Optional: for desktop compatibility
-        className="scan-now positive"
+        className="scan-now-button positive"
         style={{
-          width: "150px",
-          height: "auto",
           WebkitUserSelect: "none",
           MozUserSelect: "none",
           msUserSelect: "none",
