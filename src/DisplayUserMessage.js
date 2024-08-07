@@ -8,5 +8,5 @@ export const DisplayUserMessage = ({ userMessage, setUserMessage }) => {
     }, 10000)
   }, [userMessage])
 
-  return <h2 className="user-message center">{userMessage || null}</h2>
+  return userMessage && <h2 className="user-message center">{userMessage}</h2>
 }

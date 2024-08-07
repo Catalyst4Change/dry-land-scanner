@@ -193,3 +193,13 @@ button {
     width: 100px;
   }
 }
+
+.user-message {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border: 1px red solid;
+  border-radius: 5px;
+}

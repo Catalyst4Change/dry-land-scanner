@@ -1,6 +1,6 @@
 import { gapi } from "gapi-script";
 
-export const sendScansToSheet = async (scannedData, setUserMessage, sheetNumber) => {
+export const sendScansToSheet = async (scannedData, setUserMessage, sheetID) => {
   if (!gapi.client) {
     setUserMessage("Google API not loaded!");
     return false;
@@ -8,8 +8,8 @@ export const sendScansToSheet = async (scannedData, setUserMessage, sheetNumber)
 
 
   const params = {
-    spreadsheetId: "1eOjJmq4Ex8TuBQdFbmeUBcaPWRrKqxXgoNax8GnEspA",
-    range: `Sheet${sheetNumber}`,
+    spreadsheetId: sheetID,
+    range: `Sheet1`,
     valueInputOption: "USER_ENTERED",
     insertDataOption: "INSERT_ROWS",
   };
@@ -20,7 +20,9 @@ export const sendScansToSheet = async (scannedData, setUserMessage, sheetNumber)
 
   try {
     const response = await gapi.client.sheets.spreadsheets.values.append(params, valueRangeBody);
-    setUserMessage("Data sent successfully!");
+    if (response.ok) {
+      setUserMessage("Data sent successfully!");
+    }
     return true;
   } catch (error) {
     const errorMessage = error.result?.error?.message || "Unknown error occurred";

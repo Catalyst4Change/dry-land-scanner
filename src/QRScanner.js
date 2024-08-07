@@ -19,45 +19,42 @@ export const QRScanner = ({
   }
 
   const validQRCodePattern =
-    /^[A-Za-z0-9 -:]+\|[A-Za-z0-9 -]+\|[A-Za-z0-9 -]+\|[A-Za-z0-9 -]+$/
+    /^[A-Za-z0-9 -:]+\|[A-Za-z0-9 -:]+(\|[A-Za-z0-9 -:]+\|[A-Za-z0-9 -:]+)?$/ // vehicle type | identifier/license plate
+  // or
   // product | batch | size | quantity
-  // vehicle designator | vehicle number/license plate | time | milage
 
   const handleScan = (data) => {
+    updateScannerKey()
     if (data) {
-      const currentTimeStamp = convertTimeStamp(new Date())
-      parseScanData(data.text, currentTimeStamp)
-      updateScannerKey()
-    }
-  }
+      console.log(data)
+      const timeStamp = convertTimeStamp(new Date())
+      if (validQRCodePattern.test(data.text)) {
+        const parts = data.text.split("|")
+        const [product, batch, bottleSize = "", quantity = ""] = parts
 
-  const parseScanData = (data, timeStamp) => {
-    if (validQRCodePattern.test(data)) {
-      const parts = data.split("|")
-      const [product, batch, bottleSize, quantity] = parts
+        const sanitizedProduct = sanitizeInput(product) // vehicle
+        const sanitizedBatch = sanitizeInput(batch) // identifier
+        const sanitizedBottleSize = sanitizeInput(bottleSize)
+        const sanitizedQuantity = sanitizeInput(quantity)
 
-      const sanitizedProduct = sanitizeInput(product) // vehicle
-      const sanitizedBatch = sanitizeInput(batch) // lic. plate
-      const sanitizedBottleSize = sanitizeInput(bottleSize) // check in/out
-      const sanitizedQuantity = sanitizeInput(quantity) // milage
+        const scanItem = [
+          timeStamp,
+          sanitizedProduct,
+          sanitizedBatch,
+          sanitizedBottleSize,
+          sanitizedQuantity,
+          user,
+        ]
 
-      const scanItem = [
-        timeStamp,
-        sanitizedProduct,
-        sanitizedBatch,
-        sanitizedBottleSize,
-        sanitizedQuantity,
-        user,
-      ]
-
-      setCurrentScan(scanItem)
-      if (sanitizedProduct.includes("Vehicle")) {
-        toggleEditModal(true)
+        setCurrentScan(scanItem)
+        if (sanitizedProduct.includes("Vehicle")) {
+          toggleEditModal(true)
+        } else {
+          toggleEditModal(false)
+        }
       } else {
-        toggleEditModal(false)
+        handleScanError("Invalid QR code data format!")
       }
-    } else {
-      handleScanError("Invalid QR code data format!")
     }
   }
 
