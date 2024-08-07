@@ -18,7 +18,7 @@ export const App = () => {
   const [editModalOpen, setEditModalOpen] = useState(false)
   const [deleteModalOpen, setDeleteModalOpen] = useState(false)
   const [scanning, setScanning] = useState(false)
-  const [currentScan, setCurrentScan] = useState([])
+  const [currentScan, setCurrentScan] = useState({})
   const [vehicleModalOpen, setVehicleModalOpen] = useState(false)
 
   // initialize local storage
@@ -146,7 +146,7 @@ export const App = () => {
         closeModals={closeModals}
         scannedData={scannedData}
         setScannedData={setScannedData}
-        scanItem={currentScan}
+        currentScan={currentScan}
         editIndex={editIndex}
       />
 
@@ -161,9 +161,10 @@ export const App = () => {
       <VehicleModal
         vehicleModalOpen={vehicleModalOpen}
         handleCancel={toggleEditModal}
-        scanItem={currentScan}
+        currentScan={currentScan}
         closeModals={closeModals}
         setUserMessage={setUserMessage}
+        user={user}
       />
 
       <DisplayUserMessage

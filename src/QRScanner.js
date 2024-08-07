@@ -5,7 +5,6 @@ import "./App.scss"
 const QrReader = React.lazy(() => import("react-qr-scanner"))
 
 export const QRScanner = ({
-  user,
   setCurrentScan,
   setUserMessage,
   toggleEditModal,
@@ -26,7 +25,7 @@ export const QRScanner = ({
   const handleScan = (data) => {
     updateScannerKey()
     if (data) {
-      console.log(data)
+      console.log(data.text)
       const timeStamp = convertTimeStamp(new Date())
       if (validQRCodePattern.test(data.text)) {
         const parts = data.text.split("|")
@@ -37,20 +36,21 @@ export const QRScanner = ({
         const sanitizedBottleSize = sanitizeInput(bottleSize)
         const sanitizedQuantity = sanitizeInput(quantity)
 
-        const scanItem = [
-          timeStamp,
-          sanitizedProduct,
-          sanitizedBatch,
-          sanitizedBottleSize,
-          sanitizedQuantity,
-          user,
-        ]
+        const currentScan = {
+          timeStamp: timeStamp,
+          product: sanitizedProduct,
+          batch: sanitizedBatch,
+          size: sanitizedBottleSize,
+          quantity: sanitizedQuantity,
+        }
 
-        setCurrentScan(scanItem)
-        if (sanitizedProduct.includes("Vehicle")) {
-          toggleEditModal(true)
-        } else {
+        setCurrentScan(currentScan)
+        if (quantity > 0) {
+          // is batch
           toggleEditModal(false)
+        } else {
+          // is vehicle
+          toggleEditModal(true)
         }
       } else {
         handleScanError("Invalid QR code data format!")

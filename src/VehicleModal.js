@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react"
 import Modal from "react-modal"
 import { sendScansToSheet } from "./SendToSheet"
 import { convertTimeStamp } from "./timestampConverter"
+import "./App.scss"
 
 export const VehicleModal = ({
   vehicleModalOpen,
   handleCancel,
-  scanItem,
+  currentScan,
   closeModals,
   setUserMessage,
+  user,
 }) => {
   // vehicle designator/type | vehicle number/license plate | time | milage
 
@@ -16,6 +18,22 @@ export const VehicleModal = ({
   const [vehicleIdentifier, setVehicleIdentifier] = useState("")
   const [vehicleMilage, setVehicleMilage] = useState("")
   const [vehicleDriver, setVehicleDriver] = useState("")
+  const [vehicleCheckedOut, setVehicleCheckedOut] = useState(false)
+  const [localVehicle, setLocalVehicle] = useState(null)
+
+  useEffect(() => {
+    console.log("currentScan: ", currentScan)
+
+    setVehicleType(currentScan.product)
+    setVehicleIdentifier(currentScan.batch)
+    setVehicleDriver(user)
+    setVehicleMilage("")
+  }, [currentScan])
+
+  useEffect(() => {
+    confirmLocalVehicle()
+  }, [vehicleIdentifier])
+  
 
   const updateMilage = (event) => {
     event.preventDefault()
@@ -24,25 +42,30 @@ export const VehicleModal = ({
 
   const clearData = () => {
     setVehicleType("")
+    setVehicleIdentifier("")
     setVehicleMilage("")
     setVehicleDriver("")
+    setVehicleCheckedOut(false)
+    setLocalVehicle(null)
   }
 
-  const cancelVehicleEdit = (event) => {
-    event.preventDefault()
-    closeModals()
-    clearData()
-  }
+  const confirmLocalVehicle = () => {
+    const storedVehicle = localStorage.getItem("vehicleData")
+    const parsedVehicle = JSON.parse(storedVehicle)
+    setLocalVehicle(parsedVehicle)
 
-  const submitData = (event) => {
-    event.preventDefault()
-    queryLocalStorage()
-    closeModals()
-    clearData()
+    console.log(parsedVehicle, " || ", vehicleIdentifier)
+
+    if (
+      parsedVehicle &&
+      parsedVehicle.vehicleIdentifier === vehicleIdentifier
+    ) {
+      console.log("vehicle already checked out")
+      setVehicleCheckedOut(true)
+    }
   }
 
   const queryLocalStorage = () => {
-    const localVehicle = localStorage.getItem("vehicleData")
     if (!localVehicle) {
       // check in - save vehicle data
       const checkoutTime = Date.now()
@@ -92,7 +115,7 @@ export const VehicleModal = ({
           checkoutDriver,
         ],
       ]
-      
+
       // submit directly to G sheets (page 2)
       console.log("vehicleReturnData:", vehicleReturnData)
       sendScansToSheet(vehicleReturnData, setUserMessage, 2)
@@ -113,14 +136,18 @@ export const VehicleModal = ({
     return `${formattedHours}:${formattedMinutes}`
   }
 
-  useEffect(() => {
-    if (scanItem.length > 0) {
-      setVehicleType(scanItem[2])
-      setVehicleIdentifier(scanItem[3])
-      setVehicleDriver(scanItem[5])
-      setVehicleMilage("")
-    }
-  }, [scanItem])
+  const submitData = (event) => {
+    event.preventDefault()
+    queryLocalStorage()
+    closeModals()
+    clearData()
+  }
+
+  const cancelVehicleEdit = (event) => {
+    event.preventDefault()
+    closeModals()
+    clearData()
+  }
 
   return (
     <Modal
@@ -128,11 +155,14 @@ export const VehicleModal = ({
       onRequestClose={handleCancel}
       contentLabel="Vehicle Info"
     >
-      <form className="modal" onSubmit={(e) => submitData(e)}>
-        <h2>Check-in Vehicle:</h2>
+      <form className="modal-form center" onSubmit={(e) => submitData(e)}>
+        <h2> {vehicleCheckedOut ? "Check In Vehicle" : "Check Out Vehicle" }</h2>
         <p>Vehicle: {vehicleType}</p>
         <p>Identifier: {vehicleIdentifier}</p>
         <p>Driver: {vehicleDriver}</p>
+        {vehicleCheckedOut ? (
+          <p>Checkout Milage: {localVehicle.checkoutMilage}</p>
+        ) : null}
         <div className="milage-adjust">
           <label htmlFor="milage">
             <p>Enter current milage:</p>
@@ -146,11 +176,11 @@ export const VehicleModal = ({
             onChange={(e) => updateMilage(e)}
           />
         </div>
+        <button type="submit" className="positive">
+          {vehicleCheckedOut ? "Check In" :"Check Out"  }
+        </button>
         <button className="negative" onClick={(e) => cancelVehicleEdit(e)}>
           Cancel
-        </button>
-        <button type="submit" className="positive">
-          Done
         </button>
       </form>
     </Modal>

@@ -6,22 +6,22 @@ Modal.setAppElement("#root")
 export const EditScanModal = ({
   editModalOpen,
   closeModals,
-  scanItem,
+  currentScan,
   setScannedData,
   editIndex,
 }) => {
   const [quantity, setQuantity] = useState(null)
 
   useEffect(() => {
-    if (scanItem.length > 0) {
-      const parsedQuantity = parseInt(scanItem[4])
+    if (currentScan) {
+      const parsedQuantity = parseInt(currentScan.quantity)
       if (!isNaN(parsedQuantity)) {
         setQuantity(parsedQuantity)
       } else {
         setQuantity(0)
       }
     }
-  }, [scanItem])
+  }, [currentScan])
 
   const handleQuantityChange = (value) => {
     setQuantity(value)
@@ -39,21 +39,18 @@ export const EditScanModal = ({
   const handleSubmit = (event) => {
     event.preventDefault()
 
-    const updatedItem = [...scanItem]
-    updatedItem[4] = quantity // Update the quantity in the item
-
     if (editIndex !== null && editIndex >= 0) {
       // Update an existing item
       setScannedData((currentScannedData) =>
         currentScannedData.map((item, index) =>
-          index === editIndex ? updatedItem : item
+          index === editIndex ? { ...item, quantity } : item
         )
       )
     } else {
       // Add a new item
       setScannedData((currentScannedData) => [
         updatedItem,
-        ...currentScannedData
+        ...currentScannedData,
       ])
     }
     closeModals() // Close the modal after submission
@@ -72,13 +69,13 @@ export const EditScanModal = ({
     >
       <form className="modal-form center" onSubmit={(e) => handleSubmit(e)}>
         <span style={{ fontWeight: "bold", fontSize: "25px" }}>
-          Product: {scanItem[1]}
+          Product: {currentScan.product}
         </span>
         <span style={{ fontWeight: "bold", fontSize: "25px" }}>
-          Batch: {scanItem[2]}
+          Batch: {currentScan.batch}
         </span>
         <span style={{ fontWeight: "bold", fontSize: "25px" }}>
-          Size: {scanItem[3]}ml
+          Size: {currentScan.size}ml
         </span>
 
         <h2>Edit Quantity:</h2>

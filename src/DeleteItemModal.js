@@ -29,16 +29,16 @@ export const DeleteItemModal = ({
     >
       <form className="modal-form center" onSubmit={(e) => handleSubmit(e)}>
         <span style={{ fontWeight: "bold", fontSize: "25px" }}>
-          Product: {currentScan[1]}
+          Product: {currentScan.product}
         </span>
         <span style={{ fontWeight: "bold", fontSize: "25px" }}>
-          Batch: {currentScan[2]}
+          Batch: {currentScan.batch}
         </span>
         <span style={{ fontWeight: "bold", fontSize: "25px" }}>
-          Size: {currentScan[3]}ml
+          Size: {currentScan.size}ml
         </span>
         <span style={{ fontWeight: "bold", fontSize: "25px" }}>
-          Quantity: {currentScan[4]}ct
+          Quantity: {currentScan.quantity}ct
         </span>
         <h2>Are you sure you want to delete this scan?</h2>
         <div className="modal-options">
