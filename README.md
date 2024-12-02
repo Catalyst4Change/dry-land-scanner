@@ -69,10 +69,16 @@ For support or inquiries, please contact Dryland Distillery management directly.
 
 ---
 
-Let me know if you'd like to tweak any section!
-<!-- ## Prerequisites
+Got it! Here's the new section to add:  
 
-Before you begin, ensure you have met the following requirements:
+---
 
-- You have a `Node.js` environment installed.
-- You have access to `Google Sheets API` and `Firebase`. -->
+## Notes for Future Developers  
+
+While developing this project, I encountered significant challenges:  
+- The complexity of integrating with Google Sheets became overwhelming and proved to be unsustainable in the long term.  
+- Managing user authentication and permissions for Google Sheets often led to errors and inefficiencies.
+
+If you plan to extend this project, consider exploring alternative database solutions or APIs for better scalability and reliability. Good luck!  
+
+---
