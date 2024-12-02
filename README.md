@@ -63,16 +63,6 @@ This project is private and does not accept external contributions or licensing.
 
 ---
 
-## Contact
-
-For support or inquiries, please contact Dryland Distillery management directly.
-
----
-
-Got it! Here's the new section to add:  
-
----
-
 ## Notes for Future Developers  
 
 While developing this project, I encountered significant challenges:  
@@ -80,5 +70,11 @@ While developing this project, I encountered significant challenges:
 - Managing user authentication and permissions for Google Sheets often led to errors and inefficiencies.
 
 If you plan to extend this project, consider exploring alternative database solutions or APIs for better scalability and reliability. Good luck!  
+
+---
+
+## Contact
+
+For support or inquiries, please contact catalystFourChange@iCloud.Com
 
 ---
